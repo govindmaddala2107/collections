@@ -1,6 +1,7 @@
 package tutorials.list_tutorials.arraylist_tutorials;
 
 import java.util.Arrays;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class ArrayListTutorial {
@@ -74,7 +75,6 @@ public class ArrayListTutorial {
         System.out.println(a); // [0, 1, 2, govind, maddala, 3, 4, govind, maddala]
     }
 
-
     public static void updateElement() {
 
         // updateElement
@@ -91,7 +91,10 @@ public class ArrayListTutorial {
 
         // removing object by index
         v.add("gowind");
+        v.add("maddala");
         v.remove(0); // []
+        v.remove("maddala");
+
         System.out.println(v);
         v.add("govind");
         System.out.println(v); // [govind]
@@ -116,33 +119,71 @@ public class ArrayListTutorial {
         System.out.println(a); // [1, 2, 3]
     }
 
-    public static void verifyElementsInArrayList(){
+    public static void verifyElementsInArrayList() {
         ArrayList<String> v = new ArrayList<>();
         v.add("govind");
-        System.out.println(v.contains("govind")); //true
+        System.out.println(v.contains("govind")); // true
 
         ArrayList<String> a1 = new ArrayList<>();
         a1.add("govind");
-        a1.add("maddala");
-        System.out.println(v.containsAll(a1)); //false
+        a1.add("maddala"); 
+        System.out.println(v.containsAll(a1)); // false
     }
 
-    public static void convertArrayListToArray(){
+    public static void accessElementInArrayList() {
+        ArrayList<String> v = new ArrayList<>();
+        v.add("govind");
+        v.add("maddala");
+
+        System.out.println(v.get(0)); // maddala
+    }
+
+    public static void convertArrayListToArray() {
         ArrayList<String> v = new ArrayList<>();
         v.add("govind");
         v.add("govind");
         Object[] arr = v.toArray();
+        String[] stringArr = v.toArray(new String[0]);
+        System.out.println(stringArr.toString());
         System.out.println(Arrays.toString(arr)); // [govind, govind]
     }
 
-    public static void main(String[] args) {
+    public static void getArrayListCapacityUsingReflexes()
+            throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+        ArrayList<Integer> list = new ArrayList<>(5);
+        list.add(1);
+        list.add(1);
+        list.add(1);
+        list.add(1);
+        list.add(1);
+        Field field = ArrayList.class.getDeclaredField("elementData");
+        field.setAccessible(true);
+        Object[] elementData = (Object[]) field.get(list);
+        System.out.println("ArrayList Capacity is: Before" + elementData.length);
+
+        list.add(1);
+        elementData = (Object[]) field.get(list);
+        System.out.println("ArrayList Capacity is: Before" + elementData.length);
+    }
+
+    public static void main(String[] args)
+            throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 
         // ArrayListTutorial.createArrayList();
         // ArrayListTutorial.addToArrayList();
         // ArrayListTutorial.updateElement();
         // ArrayListTutorial.deleteElement();
         // ArrayListTutorial.verifyElementsInArrayList();
-        ArrayListTutorial.convertArrayListToArray();
+        // ArrayListTutorial.convertArrayListToArray();
+        // ArrayListTutorial.getArrayListCapacityUsingReflexes();
+
+        ArrayList<String> list = new ArrayList<>(10);
+
+        list.add(0, "2");
+        // list.add(1, "2");
+        // list.add(2, "2");
+        // System.out.println(list.get(0));
+        // System.out.println(list);
     }
 
 }
