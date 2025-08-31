@@ -1,4 +1,4 @@
-package tutorials.list_tutorials.arraylist_tutorials;
+package arraylist_tutorials;
 
 import java.util.Arrays;
 import java.lang.reflect.Field;

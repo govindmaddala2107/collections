@@ -283,7 +283,323 @@
   - It won't work directly, we have to make some changes in IntelJ IDE.
   - 
 
+### Comparator:
+- Comparator is an interface through which we can do **custom ordering**. 
+- Integers
+  - Natural Ordering or Null:
+  ```
+  public static void ascSortWithNull() {
+		List<Integer> nums = new ArrayList<>();
+        nums.add(10000);
+        nums.add(100);
+        nums.add(10);
+        nums.sort(null);
+        System.out.println("ascSortWithNull: " + nums);
+        // ascSortWithNull: [10, 100, 10000]
+	}
+  ```
+  - Ascending With **compare** method coming from **functionalInterface** named **Comparator**
+  ```
+  class IntSortAsc implements Comparator<Integer>{
+	
+    @Override
+    public int compare(Integer num1, Integer num2) {
+      return num1 - num2;
+    }
+  }
 
+  public static void ascSortWithComparatorImpl() {
+		List<Integer> nums = new ArrayList<>();
+        nums.add(10000);
+        nums.add(100);
+        nums.add(10);
+        nums.sort(new IntSortAsc());
+        System.out.println("ascSortWithComparatorImpl: " + nums);
+        // ascSortWithComparatorImpl: [10, 100, 10000]
+	}
+  ```
+  - Descending With **compare** method coming from **functionalInterface** named **Comparator**
+  ```
+  class IntSortDesc implements Comparator<Integer>{
+	
+    @Override
+    public int compare(Integer num1, Integer num2) {
+      return num2 - num1;
+    }
+  }
+
+  public static void descSortWithComparatorImpl() {
+		List<Integer> nums = new ArrayList<>();
+        nums.add(10000);
+        nums.add(100);
+        nums.add(10);
+        nums.sort(new IntSortDesc());
+        System.out.println("descSortWithComparatorImpl: " + nums);
+        // descSortWithComparatorImpl: [10000, 100, 10]
+	}
+  ```
+
+	public static void descSortWithComparatorLambda() {
+		List<Integer> nums = new ArrayList<>();
+        nums.add(10000);
+        nums.add(100);
+        nums.add(10);
+        nums.sort((a,b) -> b - a);
+        System.out.println("descSortWithComparatorLambda: " + nums);
+        // descSortWithComparatorLambda: [10000, 100, 10]
+	}
+  - Ascending with lambda function implementing **compare** method of **functionalInterface** named **Comparator** :
+  ```
+  public static void ascSortWithComparatorLambda() {
+		List<Integer> nums = new ArrayList<>();
+        nums.add(10000);
+        nums.add(100);
+        nums.add(10);
+        nums.sort((a,b) -> a - b);
+        System.out.println("ascSortWithComparatorLambda: " + nums);
+        // ascSortWithComparatorLambda: [1, 100, 10000]
+	}
+  ```
+  - Descending with lambda function implementing **compare** method of **functionalInterface** named **Comparator** :
+  ```
+  public static void descSortWithComparatorLambda() {
+    List<Integer> nums = new ArrayList<>();
+        nums.add(10000);
+        nums.add(100);
+        nums.add(10);
+        nums.sort((a,b) -> b - a);
+        System.out.println("descSortWithComparatorLambda: " + nums);
+        // descSortWithComparatorLambda: [10000, 100, 10]
+  }
+  ```
+
+- String:
+  - With Naturl Ordering / Null: compares letter wise and sorts lexicological wise:
+  ```
+  public static void sortWithNull() {
+		List<String> words = Arrays.asList("banana", "cat", "a", "app", "bad");
+		words.sort(null);
+		System.out.println("sortWithNull: " + words);
+		// sortWithNull: [a, app, bad, banana, cat]
+	}
+  ```
+  - Ascending length-wise With **compare** method coming from **functionalInterface** named **Comparator**:
+  ```
+  class StringSortAsc implements Comparator<String>{
+	
+    @Override
+    public int compare(String w1, String w2) {
+      return w1.length() - w2.length();
+    }
+  }
+  public static void sortAscWithImpl() {
+		List<String> words = Arrays.asList("Aaaaa5", "Aaa3", "A1");
+		words.sort(new StringSortAsc());
+		System.out.println("sortAscWithImpl: " + words);
+		// sortAscWithImpl: [A1, Aaa3, Aaaaa5]
+	}
+  ```
+  - Descending length-wise With **compare** method coming from **functionalInterface** named **Comparator**:
+  ```
+  class StringSortDesc implements Comparator<String>{
+	
+    @Override
+    public int compare(String w1, String w2) {
+      return w2.length() - w1.length();
+    }
+  }
+  public static void sortDescWithImpl() {
+		List<String> words = Arrays.asList("Aaaaa5", "Aaa3", "A1", "Aaaaaaa7");
+		words.sort(new StringSortDesc());
+		System.out.println("sortDescWithImpl: " + words);
+		// sortDescWithImpl: [Aaaaaaa7, Aaaaa5, Aaa3, A1]
+	}
+  ```
+  - Ascending length-wise With **compare** method coming from **functionalInterface** named **Comparator** with **lambda**:
+  ```
+  public static void sortAscWithLambda() {
+		List<String> words = Arrays.asList("Aaaaa5", "Aaa3", "A1");
+		words.sort((a,b)-> a.length() - b.length());
+		System.out.println("sortAscWithLambda: " + words);
+		// sortAscWithLambda: [A1, Aaa3, Aaaaa5]
+	}
+  ```
+  - Descending length-wise With **compare** method coming from **functionalInterface** named **Comparator** with **lambda**:
+  ```
+  public static void sortDescWithLambda() {
+    List<String> words = Arrays.asList("Aaaaa5", "Aaa3", "A1", "Aaaaaaa7");
+    words.sort((a,b)-> b.length() - a.length());
+    System.out.println("sortDescWithLambda: " + words);
+    // sortDescWithLambda: [Aaaaaaa7, Aaaaa5, Aaa3, A1]
+  }
+  ```
+- Classes and Objects:
+- There is a class names **Student** as follows and on this we have to implement sort:
+  ```
+  class Student{
+    private String name;
+    private double gpa;
+    
+    public Student(String name, double gpa) {
+      super();
+      this.name = name;
+      this.gpa = gpa;
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public double getGpa() {
+      return gpa;
+    }
+
+    @Override
+    public String toString() {
+      return name + " : " + gpa;
+    }
+  }
+  ```
+  - Data:
+  ```
+  public static List<Student> setData() {
+		List<Student> students = new ArrayList<>();
+		students.add(new Student("Dharma", 3.5));
+		students.add(new Student("Bobby", 3.8));
+		students.add(new Student("Chaitanya", 4.5));
+		students.add(new Student("Anirudh", 3.5));
+		return students;
+	}
+  ```
+  - Natural sorting / null throws **error** as it doesn't know on which object, it has to sort:
+  ```
+  public static void naturalSorting() {
+		List<Student> students = setData();
+		try {
+			students.sort(null);
+			System.out.println("naturalSorting: " + students);
+		} catch (Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+		}
+		
+		/*
+		 
+		 Exception: class tutorials.comparator_tutorials.Student 
+		 cannot be cast to class java.lang.Comparable 
+		 (tutorials.comparator_tutorials.Student is in unnamed module of loader 'app'; 
+		 java.lang.Comparable is in module java.base of loader 'bootstrap') 
+		 
+		 */
+		
+	}
+  ```
+  - Custom logic implementing **compare** method of **Comparator** using lambda expression:
+  ```
+  public static void ascByGpaWithComparatorLambda() {
+		List<Student> students = setData();
+		
+		//ascending, so a-b
+		students.sort((a, b) -> {
+			if(a.getGpa() - b.getGpa() > 0) return 1;
+			if(a.getGpa() - b.getGpa() < 0) return -1;
+			return 0;
+		});
+		System.out.println("ascByGpaWithComparatorLambda: " + students);
+		
+		/* ascByGpaWithComparatorLambda: 
+		 * Dharma, gpa=3.5 
+		 * Anirudh, gpa=3.5 
+		 * Bobby, gpa=3.8 
+		 * Chaitanya, gpa=4.5
+		 */
+		
+	}
+  ```
+  - Custom logic implementing **compare** method of **Comparator** using lambda expression and if gpa equal then order by name of datatype **String** using **compareTo**:
+  ```
+  public static void ascByGpaWithComparatorLambdaAndNamesOnEqualWithCompareTo() {
+		List<Student> students = setData();
+		
+		//ascending, so a-b
+		students.sort((a, b) -> {
+			if(a.getGpa() - b.getGpa() > 0) return 1;
+			if(a.getGpa() - b.getGpa() < 0) return -1;
+			
+			// On equal of gpa, we want to sort by bame
+			return a.getName().compareTo(b.toString());
+		});
+		System.out.println("ascByGpaWithComparatorLambdaAndNamesOnEqualWithCompareTo: " + students);
+		
+		/* ascByGpaWithComparatorLambdaAndNamesOnEqualWithCompareTo: 
+			 Anirudh : 3.5, 
+			 Dharma : 3.5, 
+			 Bobby : 3.8, 
+			 Chaitanya : 4.5
+		 */
+		
+	}
+  ```
+  - Using **comparing** method of **Comparator** and using **method-reference**:
+  ```
+  public static void ascUsingComparingWithGpa() {
+		List<Student> students = setData();
+		Comparator<Student> comparator = Comparator.comparing(Student::getGpa);
+		students.sort(comparator);
+		System.out.println("ascUsingComparingWithGpa: " + students);
+		/*
+		 * Dharma : 3.5, 
+		 * Anirudh : 3.5, 
+		 * Bobby : 3.8, 
+		 * Chaitanya : 4.5
+		 */
+	}
+  ```
+  - Using **comparing** method of **Comparator** and using **method-reference** and further sortings using **chaining**:
+  ```
+  public static void descUsingComparingWithGpa() {
+		List<Student> students = setData();
+		Comparator<Student> comparator = Comparator.comparing(Student::getGpa).reversed();
+		students.sort(comparator);
+		System.out.println("descUsingComparingWithGpa: " + students);
+		/*
+		 Chaitanya : 4.5, 
+		 Bobby : 3.8, 
+		 Dharma : 3.5, 
+		 Anirudh : 3.5
+		 */
+	}
+
+	public static void descUsingComparingWithGpaAndNames() {
+		List<Student> students = setData();
+		Comparator<Student> comparator = Comparator.comparing(Student::getGpa).reversed().thenComparing(Student::getName);
+		students.sort(comparator);
+		System.out.println("descUsingComparingWithGpaAndNames: " + students);
+		/*
+		 Chaitanya : 4.5, 
+		 Bobby : 3.8,
+		 Anirudh : 3.5, 
+		 Dharma : 3.5
+		 */
+	}
+  ```
+  - Using **comparing** method of **Comparator** and using **method-reference** and passing it to **Collection.sort**:
+  ```
+  public static void descUsingComparingWithGpaAndNamesUsingCollections() {
+		List<Student> students = setData();
+		Comparator<Student> comparator = Comparator.comparing(Student::getGpa).reversed().thenComparing(Student::getName);
+    //	students.sort(comparator);
+		Collections.sort(students, comparator);
+		System.out.println("descUsingComparingWithGpaAndNamesUsingCollections: " + students);
+		/*
+		 Chaitanya : 4.5, 
+		 Bobby : 3.8,
+		 Anirudh : 3.5, 
+		 Dharma : 3.5
+		 */
+	}
+  ```
+
+  
 ### Hashmaps
 - ![Hashmap hierarchy](./images/image.png)
 - ![Map definition](image-1.png)

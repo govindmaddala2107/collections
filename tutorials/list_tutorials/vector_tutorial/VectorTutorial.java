@@ -1,4 +1,4 @@
-package tutorials.list_tutorials.vector_tutorial;
+package vector_tutorial;
 
 import java.util.Arrays;
 import java.util.Vector;
